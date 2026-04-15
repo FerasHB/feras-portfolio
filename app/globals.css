@@ -43,18 +43,30 @@ a {
   }
 
   .surface-card {
-    @apply rounded-3xl border border-border bg-card-gradient backdrop-blur-xl;
+    @apply rounded-[28px] bg-[#0d0f14] transition-shadow duration-300;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 8px 32px -4px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.06);
+  }
+  .surface-card:hover {
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 16px 48px -8px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.12);
+  }
+
+  .glass-surface {
+    @apply rounded-[28px] border-0 bg-white/[0.015] backdrop-blur-2xl transition-shadow duration-300;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 8px 32px -4px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.06);
+  }
+  .glass-surface:hover {
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 16px 48px -8px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255,255,255,0.12);
   }
 
   .section-title {
-    @apply text-3xl font-semibold tracking-tight text-text md:text-4xl;
+    @apply text-4xl font-medium tracking-tight text-white md:text-[2.8rem] lg:text-[3.2rem] lg:leading-[1.1];
   }
 
   .section-subtitle {
-    @apply max-w-2xl text-base leading-7 text-muted md:text-lg;
+    @apply max-w-2xl text-base leading-relaxed text-[#8F99C2] md:text-[1.15rem];
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-white via-[#D8DEFF] to-[#9EB0FF] bg-clip-text text-transparent;
+    @apply bg-gradient-to-b from-white to-white/70 bg-clip-text text-transparent;
   }
 }

@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
   ChevronDown,
   Code2,
@@ -38,9 +39,21 @@ const cardVariants = {
 };
 
 export default function HeroSection() {
+  const containerRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.85, 0]);
+  const cardY = useTransform(scrollYProgress, [0, 1], ["0%", "8%"]);
+  const cardScale = useTransform(scrollYProgress, [0, 1], [1, 0.98]);
+
   return (
     <section
       id="home"
+      ref={containerRef}
       className="relative overflow-hidden pb-14 pt-18 md:pb-20 md:pt-24"
     >
       <div className="container-main">
@@ -49,22 +62,23 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 22 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+            style={{ y: textY, opacity: textOpacity, willChange: "transform, opacity" }}
             className="relative"
           >
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[#D4DBFF] backdrop-blur-xl">
-              <Sparkles size={16} className="text-[#9FB0FF]" />
+            <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.02] px-4 py-2 text-sm font-medium text-[#C5D0FF] shadow-inner-glow backdrop-blur-md">
+              <Sparkles size={16} className="text-[#8C9EFF]" />
               Junior App & Web Developer aus NRW
             </div>
 
-            <h1 className="max-w-4xl text-5xl font-semibold leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-[5.8rem]">
+            <h1 className="gradient-text max-w-4xl text-[3.5rem] font-medium tracking-tighter sm:text-7xl lg:text-[6.4rem] lg:leading-[0.95]">
               Feras Hababa
             </h1>
 
-            <h2 className="mt-4 max-w-3xl text-[2.4rem] leading-tight text-[#C9D2FF] sm:text-[2.8rem] lg:text-[3.2rem]">
+            <h2 className="mt-6 max-w-3xl text-[2.2rem] font-medium tracking-tight text-[#E2E8FF] sm:text-[2.6rem] lg:text-[3rem] lg:leading-[1.1]">
               Moderne Apps für iOS, Android und Web.
             </h2>
 
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-muted md:text-[1.15rem]">
+            <p className="mt-6 max-w-2xl text-[1.1rem] leading-[1.7] text-[#8F99C2] md:text-[1.2rem]">
               Ich entwickle moderne Apps und Webanwendungen mit Fokus auf iOS,
               Android, React Native und TypeScript. Mein Ziel ist es, saubere,
               praktische und benutzerfreundliche Lösungen zu bauen.
@@ -111,16 +125,11 @@ export default function HeroSection() {
               delay: 0.12,
               ease: [0.22, 1, 0.36, 1],
             }}
+            style={{ y: cardY, scale: cardScale, willChange: "transform" }}
             className="relative"
           >
-            <motion.div
-              animate={{ y: [0, -4, 0] }}
-              transition={{
-                duration: 6,
-                repeat: Number.POSITIVE_INFINITY,
-                ease: "easeInOut",
-              }}
-              className="absolute -inset-6 rounded-[2.5rem] bg-[radial-gradient(circle_at_25%_20%,rgba(124,140,255,0.18),transparent_30%),radial-gradient(circle_at_75%_30%,rgba(168,120,255,0.10),transparent_28%),radial-gradient(circle_at_50%_80%,rgba(93,211,255,0.08),transparent_24%)] blur-3xl"
+            <div
+              className="absolute -inset-6 rounded-[2.5rem] bg-[radial-gradient(circle_at_25%_20%,rgba(124,140,255,0.18),transparent_30%),radial-gradient(circle_at_75%_30%,rgba(168,120,255,0.10),transparent_28%),radial-gradient(circle_at_50%_80%,rgba(93,211,255,0.08),transparent_24%)] blur-3xl will-change-transform"
             />
 
             <motion.div
@@ -128,8 +137,8 @@ export default function HeroSection() {
               transition={{ type: "spring", stiffness: 110, damping: 18 }}
               className="relative mx-auto max-w-[540px]"
             >
-              <div className="rounded-[28px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-2.5 shadow-[0_18px_60px_rgba(0,0,0,0.40)] backdrop-blur-2xl">
-                <div className="overflow-hidden rounded-[24px] border border-white/10 bg-[#0B0D14]">
+              <div className="glass-surface p-2.5">
+                <div className="overflow-hidden rounded-[20px] bg-[#0A0B10]">
                   <div className="flex items-center justify-between border-b border-white/8 px-4 py-3.5">
                     <div className="flex items-center gap-2">
                       <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
@@ -152,14 +161,14 @@ export default function HeroSection() {
                         initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.55, delay: 0.2 }}
-                        className="rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.02))] p-4"
+                        className="rounded-[20px] border border-white/[0.04] bg-white/[0.02] p-5 shadow-inner-glow"
                       >
                         <div className="flex items-start justify-between gap-4">
                           <div>
-                            <p className="text-xs uppercase tracking-[0.22em] text-[#8F99C2]">
+                            <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-[#7A85B3]">
                               Schwerpunkt
                             </p>
-                            <h3 className="mt-3 max-w-sm text-[1.55rem] font-semibold leading-tight text-white">
+                            <h3 className="mt-3 max-w-sm text-[1.4rem] font-medium leading-[1.25] text-white">
                               Moderne Entwicklung für iOS, Android, React Native
                               und Web.
                             </h3>
@@ -172,9 +181,9 @@ export default function HeroSection() {
                               repeat: Number.POSITIVE_INFINITY,
                               ease: "easeInOut",
                             }}
-                            className="rounded-2xl border border-white/10 bg-white/[0.04] p-3"
+                            className="rounded-2xl border border-white/[0.06] bg-white/[0.03] p-3 shadow-inner-glow"
                           >
-                            <Smartphone className="text-[#B8C4FF]" size={20} />
+                            <Smartphone className="text-[#A2B4FF]" size={20} />
                           </motion.div>
                         </div>
 

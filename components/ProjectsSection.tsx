@@ -15,15 +15,11 @@ export default function ProjectsSection() {
       description="Hier zeige ich Projekte, an denen ich praktisch gearbeitet habe – mit Fokus auf klare Struktur, gute Nutzerführung und moderne Technologien."
     >
       <div className="relative">
-        <motion.div
-          animate={{ opacity: [0.24, 0.38, 0.24], scale: [1, 1.03, 1] }}
-          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          className="pointer-events-none absolute -left-12 top-8 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(124,140,255,0.14),transparent_65%)] blur-3xl"
+        <div
+          className="pointer-events-none absolute -left-12 top-8 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(124,140,255,0.14),transparent_65%)] blur-3xl opacity-30 will-change-transform"
         />
-        <motion.div
-          animate={{ opacity: [0.16, 0.28, 0.16], y: [0, 12, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          className="pointer-events-none absolute -right-12 bottom-0 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(168,120,255,0.10),transparent_65%)] blur-3xl"
+        <div
+          className="pointer-events-none absolute -right-12 bottom-0 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(168,120,255,0.10),transparent_65%)] blur-3xl opacity-20 will-change-transform"
         />
 
         <motion.div

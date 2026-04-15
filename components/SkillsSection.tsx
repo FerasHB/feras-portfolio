@@ -88,55 +88,58 @@ export default function SkillsSection() {
       description="Mein Fokus liegt auf Mobile Development, modernen Weboberflächen und einer sauberen, strukturierten Umsetzung."
     >
       <div className="relative">
-        <motion.div
-          animate={{ opacity: [0.3, 0.5, 0.3], scale: [1, 1.04, 1] }}
-          transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-          className="pointer-events-none absolute -left-16 top-0 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(124,140,255,0.16),transparent_65%)] blur-3xl"
-        />
-        <motion.div
-          animate={{ opacity: [0.18, 0.32, 0.18], y: [0, 14, 0] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-          className="pointer-events-none absolute -right-10 bottom-0 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(168,120,255,0.12),transparent_65%)] blur-3xl"
-        />
+        <div className="pointer-events-none absolute -left-16 top-0 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(124,140,255,0.16),transparent_65%)] blur-3xl opacity-40 will-change-transform" />
+        <div className="pointer-events-none absolute -right-10 bottom-0 h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(168,120,255,0.12),transparent_65%)] blur-3xl opacity-30 will-change-transform" />
 
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.12 }}
-          className="relative grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+          className="relative grid gap-5 md:grid-cols-2 lg:grid-cols-3"
         >
-          {skillGroups.map((group) => {
+          {skillGroups.map((group, i) => {
             const Icon = group.icon;
+            // Create a pseudo-bento layout by making the first item span wider
+            const isWide = i === 0 || i === 3;
 
             return (
               <motion.div
                 key={group.title}
                 variants={cardVariants}
-                whileHover={{ y: -8, scale: 1.01 }}
+                whileHover={{ y: -6, scale: 1.01 }}
                 transition={{ type: "spring", stiffness: 120, damping: 18 }}
-                className="group surface-card relative overflow-hidden p-6"
+                className={`group glass-surface relative flex flex-col justify-between overflow-hidden p-7 ${
+                  isWide ? "md:col-span-2" : ""
+                }`}
               >
-                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(124,140,255,0.14),transparent_28%)] opacity-70 transition-opacity duration-300 group-hover:opacity-100" />
+                {/* Massive decorative background icon */}
+                <div className="pointer-events-none absolute -bottom-10 -right-10 opacity-[0.03] transition-opacity duration-500 group-hover:opacity-[0.06]">
+                  <Icon size={180} />
+                </div>
 
-                <div className="relative">
-                  <motion.div
-                    whileHover={{ rotate: 4, scale: 1.05 }}
-                    transition={{ type: "spring", stiffness: 200, damping: 12 }}
-                    className="inline-flex rounded-2xl border border-white/10 bg-white/[0.04] p-3 shadow-[0_0_0_1px_rgba(255,255,255,0.02)]"
-                  >
-                    <Icon className="text-[#B9C5FF]" size={22} />
-                  </motion.div>
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(124,140,255,0.06),transparent_30%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
 
-                  <h3 className="mt-5 text-[1.7rem] font-semibold tracking-tight text-white">
-                    {group.title}
-                  </h3>
+                <div className="relative z-10 flex h-full flex-col">
+                  <div>
+                    <motion.div
+                      whileHover={{ rotate: 4, scale: 1.05 }}
+                      transition={{ type: "spring", stiffness: 200, damping: 12 }}
+                      className="inline-flex rounded-[14px] border border-white/[0.08] bg-white/[0.02] p-3 shadow-inner-glow"
+                    >
+                      <Icon className="text-[#A2B4FF]" size={22} />
+                    </motion.div>
 
-                  <p className="mt-3 text-[15px] leading-7 text-[#AEB7DA]">
-                    {group.description}
-                  </p>
+                    <h3 className="mt-5 text-[1.8rem] font-medium tracking-tight text-white drop-shadow-md">
+                      {group.title}
+                    </h3>
 
-                  <div className="mt-5 flex flex-wrap gap-2.5">
+                    <p className="mt-2.5 text-[1.05rem] leading-[1.65] text-[#8F99C2]">
+                      {group.description}
+                    </p>
+                  </div>
+
+                  <div className="mt-8 flex flex-wrap gap-2.5">
                     {group.skills.map((skill, index) => (
                       <motion.span
                         key={skill}
@@ -148,21 +151,12 @@ export default function SkillsSection() {
                           delay: index * 0.04,
                         }}
                         whileHover={{ y: -2, scale: 1.04 }}
-                        className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-[#E4E9FF] transition-all duration-300 group-hover:border-white/15 group-hover:bg-white/[0.07]"
+                        className="rounded-full border border-white/[0.06] bg-black/20 px-3.5 py-1.5 text-[0.85rem] font-medium text-[#D4DBFF] shadow-inner-glow backdrop-blur-md transition-all duration-300 group-hover:border-white/[0.12] group-hover:bg-white/[0.04]"
                       >
                         {skill}
                       </motion.span>
                     ))}
                   </div>
-
-                  <motion.div
-                    initial={{ opacity: 0.65 }}
-                    whileHover={{ opacity: 1 }}
-                    className="mt-6 flex items-center gap-2 text-sm text-[#8F99C2]"
-                  >
-                    <GitBranch size={14} />
-                    Strukturiert & modern
-                  </motion.div>
                 </div>
               </motion.div>
             );
