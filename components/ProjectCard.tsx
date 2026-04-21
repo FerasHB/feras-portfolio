@@ -1,23 +1,30 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionValue,
+  useSpring,
+} from "framer-motion";
 import { ArrowUpRight, Code2, Play } from "lucide-react";
 import { Project } from "@/data/projects";
 
 export default function ProjectCard({ project }: { project: Project }) {
   const cardRef = useRef<HTMLElement>(null);
 
-  // Subtle Scroll Parallax
   const { scrollYProgress } = useScroll({
     target: cardRef,
     offset: ["start end", "end start"],
   });
-  
-  const yParallax = useTransform(scrollYProgress, [0, 1], [15, -15]);
-  const yParallaxSpring = useSpring(yParallax, { stiffness: 100, damping: 40 });
 
-  // Hover 3D Tilt Effect
+  const yParallax = useTransform(scrollYProgress, [0, 1], [15, -15]);
+  const yParallaxSpring = useSpring(yParallax, {
+    stiffness: 100,
+    damping: 40,
+  });
+
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -29,11 +36,14 @@ export default function ProjectCard({ project }: { project: Project }) {
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     if (!cardRef.current) return;
+
     const rect = cardRef.current.getBoundingClientRect();
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
+
     const xPct = mouseX / rect.width - 0.5;
     const yPct = mouseY / rect.height - 0.5;
+
     x.set(xPct);
     y.set(yPct);
   };
@@ -73,9 +83,15 @@ export default function ProjectCard({ project }: { project: Project }) {
           className="relative flex h-full flex-col justify-between"
         >
           <div>
-            <span className="inline-flex rounded-full border border-white/[0.08] bg-black/40 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.2em] text-[#C5CEFF] shadow-inner-glow backdrop-blur-md">
-              Project Preview
-            </span>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex rounded-full border border-white/[0.08] bg-black/40 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.2em] text-[#C5CEFF] shadow-inner-glow backdrop-blur-md">
+                {project.type}
+              </span>
+
+              <span className="inline-flex rounded-full border border-[#7C8CFF]/20 bg-[#7C8CFF]/10 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.18em] text-[#DCE2FF] shadow-inner-glow backdrop-blur-md">
+                {project.status}
+              </span>
+            </div>
 
             <h3 className="mt-6 text-[2.2rem] font-medium leading-[1.1] tracking-tight text-white drop-shadow-lg">
               {project.title}
@@ -83,6 +99,10 @@ export default function ProjectCard({ project }: { project: Project }) {
 
             <p className="mt-2 text-[1.05rem] leading-snug text-[#E2E8FF] drop-shadow-md">
               {project.subtitle}
+            </p>
+
+            <p className="mt-3 text-sm leading-relaxed text-[#B8C2E8]">
+              <span className="text-[#E2E8FF]">Rolle:</span> {project.role}
             </p>
           </div>
 
